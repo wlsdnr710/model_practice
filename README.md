@@ -60,7 +60,7 @@ cd frontend
 npm install
 
 # Deno를 사용하는 경우
-# Deno는 package.json을 자동으로 사용합니다.
+deno install
 
 # 개발 서버 시작
 # npm을 사용하는 경우
