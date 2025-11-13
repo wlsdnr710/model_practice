@@ -23,7 +23,9 @@ app.add_middleware(
 translator = pipeline("translation", model="facebook/m2m100_418M")
 
 sentimental = pipeline(
-    "sentiment-analysis", model="nlptown/bert-base-multilingual-uncased-sentiment"
+    "sentiment-analysis",
+    # 기존 모델이 정확도가 떨어지는 듯 해서 바꿈.
+    model="jaehyeong/koelectra-base-v3-generalized-sentiment-analysis",
 )
 
 
@@ -50,21 +52,29 @@ def predict(review: ReviewSentimental):
     print(translated)
     result = sentimental(translated)[0]
     print(result)
-    label = result["label"]
     score = result["score"]
-
-    if label in ["4 stars", "5 stars"]:
-        sentiment = "긍정적"
-    elif label in ["1 star", "2 stars"]:
-        sentiment = "부정적"
+    label = result["label"]
+    sentiment = ""
+    if score < 0.7:
+        sentiment += "약"
+    elif score > 0.90:
+        sentiment += "강"
+    if label == "1":
+        sentiment += "긍정"
     else:
-        sentiment = "중립"
+        sentiment += "부정"
+
+    if label == "1":
+        final_score = 50 + 50 * score * score
+    else:
+        final_score = 50 - 50 * score * score
+
     print(label, score, sentiment)
     response = {
         "input": review.text,
         "translation": translated,
         "label": sentiment,
-        "score": round(score, 2),
+        "score": round(final_score, 1),
     }
     return response
 

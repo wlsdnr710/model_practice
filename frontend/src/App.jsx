@@ -1,6 +1,76 @@
 import { useState } from "react";
 import "./App.css";
 
+// 샘플 리뷰 예시 (자동 생성기능) AI 생성
+const SAMPLE_REVIEWS = [
+  // --- MOVIES ---
+  // Very Good
+  "A cinematic triumph that will be studied for decades; the directing is flawless and the score is hauntingly beautiful.",
+  // Good
+  "Enjoyable popcorn flick with great visual effects, though the plot is a bit thin and predictable.",
+  // Neutral
+  "It has its moments and the acting is fine, but it feels too long and drags in the second act.",
+  // Bad
+  "The pacing is a mess, the dialogue feels forced, and I couldn't connect with a single character.",
+  // Very Bad
+  "An absolute disaster of a film that fails on every conceivable level. I walked out after 20 minutes.",
+
+  // --- TECH & GADGETS ---
+  // Very Good
+  "This smartphone is a marvel of engineering; the display is gorgeous, the battery lasts forever, and it never stutters.",
+  // Good
+  "Solid performance and good build quality, making it a great value option for the mid-range market.",
+  // Neutral
+  "It does the job reasonably well, but there are no standout features to distinguish it from last year's model.",
+  // Bad
+  "Constant overheating issues and poor Bluetooth connectivity make this device practically unusable for daily tasks.",
+  // Very Bad
+  "DO NOT BUY. It stopped working completely after two days and customer support refuses to issue a refund.",
+
+  // --- FOOD & DINING ---
+  // Very Good
+  "An explosion of flavors in every bite! The chef is a genius and the staff treated us like royalty.",
+  // Good
+  "Tasty burgers and crispy fries, exactly what you want from a reliable neighborhood spot.",
+  // Neutral
+  "The food was edible but bland, and the portion sizes were a bit small considering the high price.",
+  // Bad
+  "My steak was overcooked and tough as leather, completely ruining what should have been a nice dinner.",
+  // Very Bad
+  "Found a hair in my soup, the table was sticky, and the waiter was incredibly rude when we complained.",
+
+  // --- VIDEO GAMES ---
+  // Very Good
+  "A masterpiece of interactive storytelling that sets a new bar for the entire industry. I was in tears by the ending.",
+  // Good
+  "Fun gameplay loop and nice graphics, though the side quests get a bit repetitive after a while.",
+  // Neutral
+  "It's an okay time-killer if you catch it on sale, but don't expect anything revolutionary.",
+  // Bad
+  "Riddled with bugs, frame rate drops, and clunky controls that make it frustrating to play.",
+  // Very Bad
+  "Unplayable garbage. The game crashes every five minutes and the microtransactions are predatory.",
+
+  // --- SERVICES & APPS ---
+  // Very Good
+  "Life-saving service! The team went above and beyond to help me meet my deadline at the last minute.",
+  // Good
+  "Reliable and easy to use interface, definitely makes my daily workflow much smoother.",
+  // Neutral
+  "Updates are frequent, but they seem to just move buttons around without adding any real value.",
+  // Bad
+  "Hidden fees were charged to my card without any prior notification. Very shady business practices.",
+  // Very Bad
+  "Total scam. They took my money, provided no service, and ghosted all my emails requesting support.",
+];
+
+function getRandomItem(arr) {
+  if (arr.length == 0) return undefined;
+
+  const randomIndex = Math.floor(Math.random() * arr.length);
+  return arr[randomIndex];
+}
+
 function App() {
   const [text, setText] = useState(""); // 인풋
   const [result, setResult] = useState(null); // 응답 저장
@@ -44,9 +114,17 @@ function App() {
     }
   };
 
+  const handleGenerate = (event) => {
+    event.preventDefault();
+    setText(getRandomItem(SAMPLE_REVIEWS));
+  };
+
   return (
     <div className="App">
-      <h1>영어 리뷰 감정 분석기</h1>
+      <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+        <h1>영어 리뷰 감정 분석기</h1>
+        <button onClick={handleGenerate}>생성하기</button>
+      </div>
       <form onSubmit={handleSubmit}>
         <textarea
           value={text}
@@ -76,7 +154,7 @@ function App() {
             <strong>감정:</strong> {result.label}
           </p>
           <p>
-            <strong>점수:</strong> {result.score * 100} 점 / 100점
+            <strong>점수:</strong> {result.score} 점 / 100점
           </p>
         </div>
       )}
