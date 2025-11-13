@@ -1,10 +1,24 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from transformers import pipeline
 import uvicorn
 
 app = FastAPI(title="리뷰 감정 분석")
 
+# CORS 세팅
+# 브라우저 내부적으로 보내는 options request 를 모두 차단 먹여서 추가함
+origins = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 translator = pipeline("translation", model="facebook/m2m100_418M")
 
@@ -40,11 +54,11 @@ def predict(review: ReviewSentimental):
     score = result["score"]
 
     if label in ["4 stars", "5 stars"]:
-        sentiment = "positive"
+        sentiment = "긍정적"
     elif label in ["1 star", "2 stars"]:
-        sentiment = "negative"
+        sentiment = "부정적"
     else:
-        sentiment = "neutral"
+        sentiment = "중립"
     print(label, score, sentiment)
     response = {
         "input": review.text,

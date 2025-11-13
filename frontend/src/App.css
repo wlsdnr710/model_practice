@@ -1,42 +1,81 @@
-#root {
-  max-width: 1280px;
+.App {
+  max-width: 600px;
   margin: 0 auto;
   padding: 2rem;
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+h1 {
+  font-size: 2em;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+form {
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+textarea {
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  font-family: inherit;
+  font-size: 1em;
+  background-color: #333;
+  color: white;
 }
 
-.card {
-  padding: 2em;
+button[type="submit"] {
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  color: rgba(255, 255, 255, 0.87);
 }
 
-.read-the-docs {
-  color: #888;
+button[type="submit"]:hover {
+  border-color: #646cff;
+}
+
+button[type="submit"]:disabled {
+  background-color: #333;
+  cursor: not-allowed;
+}
+
+.result {
+  margin-top: 2rem;
+  padding: 1rem;
+  border: 1px solid #444;
+  border-radius: 4px;
+  width: 500px;
+  text-align: left;
+  background-color: #2a2a2a;
+}
+
+.result h2 {
+  margin-top: 0;
+  font-size: 1.5em;
+}
+
+.result p {
+  margin: 0.5rem 0;
+}
+
+.error {
+  color: #ff6b6b;
+  margin-top: 1rem;
+  background-color: #3d2323;
+  padding: 1rem;
+  border-radius: 4px;
 }
