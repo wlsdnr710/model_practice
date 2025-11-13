@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./App.css";
 
-// 샘플 리뷰 예시 (자동 생성기능) AI 생성
+// AI 생성한 리뷰 예시들 (자동 삽입기능용)
 const SAMPLE_REVIEWS = [
   // --- MOVIES ---
   // Very Good
