@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+    container_name: backend
+    ports:
+      - "8081:8081"
+    networks:
+      - my-app-network
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: frontend
+    ports:
+      - "8080:80"
+    environment:
+      - VITE_API_URL=http://backend:8081
+    depends_on:
+      - backend
+    networks:
+      - my-app-network
+
+networks:
+  my-app-network:
+    driver: bridge

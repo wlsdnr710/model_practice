@@ -1,0 +1,16 @@
+# Python virtual environment
+.venv/
+
+# Python cache files
+__pycache__/
+*.py[cod]
+
+# Project and tool configuration
+.python-version
+pyproject.toml
+uv.lock
+README.md
+
+# Docker files
+Dockerfile.backend
+.dockerignore

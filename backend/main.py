@@ -8,10 +8,7 @@ app = FastAPI(title="리뷰 감정 분석")
 
 # CORS 세팅
 # 브라우저 내부적으로 보내는 options request 를 모두 차단 먹여서 추가함
-origins = [
-    "http://localhost:5173",
-    "http://127.0.0.1:5173",
-]
+origins = ["*"]
 
 app.add_middleware(
     CORSMiddleware,
