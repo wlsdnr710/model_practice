@@ -71,3 +71,58 @@ deno run dev
 ```
 
 프론트엔드 애플리케이션은 `http://localhost:5173` (또는 5173 포트가 사용 중인 경우 다른 포트)에서 확인할 수 있습니다.
+
+## Docker를 이용한 실행
+
+이 프로젝트는 Docker 및 Docker Compose를 사용하여 컨테이너화할 수 있습니다.
+
+### 개별 Docker 이미지 빌드
+
+백엔드 Docker 이미지를 빌드하려면:
+```sh
+cd backend
+docker build -t backend-app .
+cd ..
+```
+
+프론트엔드 Docker 이미지를 빌드하려면:
+```sh
+cd frontend
+docker build -t frontend-app .
+cd ..
+```
+
+### 개별 Docker 컨테이너 실행
+
+먼저, 컨테이너가 통신할 수 있도록 Docker 네트워크를 생성합니다:
+```sh
+docker network create my-app-network
+```
+
+그런 다음, 백엔드 컨테이너를 실행합니다:
+```sh
+docker run -d --network my-app-network --name backend -p 8081:8081 backend-app
+```
+
+그리고 프론트엔드 컨테이너를 실행합니다:
+```sh
+docker run -d --network my-app-network --name frontend -p 8080:80 -e VITE_API_URL=http://backend:8081 frontend-app
+```
+프론트엔드는 `http://localhost:8080`에서 접속할 수 있습니다.
+
+### Docker Compose 사용
+
+두 서비스를 더 쉽게 관리하려면 Docker Compose를 사용하세요. `docker-compose.yml` 파일이 있는 프로젝트의 루트 디렉토리에서 다음 명령어를 실행하세요.
+
+*   **두 컨테이너를 빌드하고 시작하려면:**
+    ```sh
+    docker-compose up --build
+    ```
+*   **컨테이너를 백그라운드에서 시작하려면:**
+    ```sh
+    docker-compose up -d
+    ```
+*   **컨테이너와 네트워크를 중지하고 제거하려면:**
+    ```sh
+    docker-compose down
+    ```
